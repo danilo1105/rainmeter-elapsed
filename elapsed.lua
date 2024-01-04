@@ -1,4 +1,9 @@
-function Elapsed(hexaPast,hexaPresent,hexaFuture,type,elapsed,line,max,ageStart,ageEnd)
+---@diagnostic disable: undefined-global
+
+function Elapsed(hexaPast, hexaPresent, hexaFuture, type, elapsed, line, max, ageStart, ageEnd)
+  if ageStart > ageEnd then
+    return 'Error: Current time cannot be greater than end time.'
+  end
 
   local labelMarkupStart = SKIN:GetVariable('labelLuaMarkupStart', '')
   local labelMarkupYears = SKIN:GetVariable('labelLuaMarkupYears', '')
@@ -13,30 +18,28 @@ function Elapsed(hexaPast,hexaPresent,hexaFuture,type,elapsed,line,max,ageStart,
   elseif type == 'months' then
     divider = 12
   elseif type == 'weeks' then
-    divider = 52  
+    divider = 52
   end
 
-  for i=1,max do
-
+  for i = 1, max do
     if i < floorElapsed then
       str = str .. "[\\x" .. hexaPast .. "]"
     elseif i == floorElapsed then
-      str = str .. "[\\x" .. hexaPresent .. "]"   
+      str = str .. "[\\x" .. hexaPresent .. "]"
     else
       str = str .. "[\\x" .. hexaFuture .. "]"
     end
-    if math.fmod(i,line) == 0 then
-      str = str .. "\13\10"
-    end    
+    if math.fmod(i, line) == 0 then
+      str = str .. " " .. i / divider .. "\13\10"
+    end
 
-    -- Divider string 
-    if i == ageStart * divider  then
+    -- Divider string
+    if i == ageStart * divider then
       str = str .. labelMarkupStart .. " " .. ageStart + 1 .. " " .. labelMarkupYears .. "\13\10"
-    end    
+    end
     if i == ageEnd * divider then
       str = str .. labelMarkupStart .. " " .. ageEnd + 1 .. " " .. labelMarkupYears .. "\13\10"
     end
-
   end
 
   return str
