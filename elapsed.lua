@@ -1,8 +1,10 @@
 ---@diagnostic disable: undefined-global
 
 function Elapsed(hexaPast, hexaPresent, hexaFuture, type, elapsed, line, max, ageStart, ageEnd)
+  local errorMessageGreater = "Error: Current time cannot be greater than end time!"
   if ageStart > ageEnd then
-    return 'Error: Current time cannot be greater than end time.'
+    SKIN:Bang("!Log", errorMessageGreater, "Error")
+    return errorMessageGreater
   end
 
   local labelMarkupStart = SKIN:GetVariable('labelLuaMarkupStart', '')
