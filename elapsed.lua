@@ -46,3 +46,26 @@ function Elapsed(hexaPast, hexaPresent, hexaFuture, type, elapsed, line, max, ag
 
   return str
 end
+
+--[[
+for i = 1, max do
+        local colorCode = hexaFuture -- Default to future color
+
+        -- Determine the correct color code based on the group of 12 months
+        if i <= floorElapsed then
+            colorCode = hexaPast
+        elseif i <= (floorElapsed + 12) then
+            colorCode = hexaGroup1 -- First 12 months after elapsed
+        elseif i <= (floorElapsed + 24) then
+            colorCode = hexaGroup2 -- Next 12 months
+        -- Add more conditions for more groups if needed
+        else
+            colorCode = hexaPresent
+        end
+
+        -- Append the color-coded icon to the string
+        str = str .. string.format("[\\x%s]", colorCode)
+
+        -- Existing code to handle line breaks and age markers...
+    end
+]]
